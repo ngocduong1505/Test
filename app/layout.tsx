@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Static Image Viewer",
-  description: "Displays a static image and notifies Telegram on page view",
+  title: "Ký ức tuổi thơ",
+  description: "Bộ sưu tập những khoảnh khắc tuổi thơ và lời nhắn gửi",
 };
 
 export default function RootLayout({
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="vi">
-      <body style={{ margin: 0 }}>{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

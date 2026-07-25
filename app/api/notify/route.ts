@@ -13,14 +13,30 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { path } = await req.json().catch(() => ({ path: "/" }));
+  const body = await req.json().catch(() => ({ path: "/" }));
+  const path: string = body?.path ?? "/";
+  const message: string | undefined =
+    typeof body?.message === "string" ? body.message.trim() : undefined;
   const timestamp = new Date().toISOString();
 
-  const text = [
-    "🔔 *Website vừa được mở*",
-    `📄 Trang: \`${path ?? "/"}\``,
-    `🕒 Thời gian: \`${timestamp}\``,
-  ].join("\n");
+  // Escape ký tự đặc biệt của Markdown để tránh lỗi định dạng khi gửi
+  const escapeMd = (s: string) =>
+    s.replace(/([_*`\[\]])/g, "\\$1");
+
+  const text = message
+    ? [
+        "💬 *Tin nhắn mới từ người dùng*",
+        "",
+        escapeMd(message),
+        "",
+        `📄 Trang: \`${path}\``,
+        `🕒 Thời gian: \`${timestamp}\``,
+      ].join("\n")
+    : [
+        "Thông báo: *Website vừa được mở*",
+        `📄 Trang: \`${path}\``,
+        `🕒 Thời gian: \`${timestamp}\``,
+      ].join("\n");
 
   const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
