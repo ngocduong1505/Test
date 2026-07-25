@@ -9,9 +9,9 @@ const photos: Photo[] = [
   { src: "/baby.jpg", caption: "Baby cute" },
   { src: "/tot_nghiep_cap1.jpg", caption: "Tốt nghiệp cấp 1" },
   { src: "/with_mom.jpg", caption: "Với mẹ" },
-  { src: "/display-image.svg", caption: "Góc sân và khoảng trời" },
-  { src: "/display-image.svg", caption: "Buổi chiều thả diều" },
-  { src: "/display-image.svg", caption: "Cùng lũ bạn trong xóm" },
+  { src: "/choc_to_ong.jpg", caption: "Chọc tổ ong" },
+  { src: "/e.jpg", caption: "Cạn lời" },
+  { src: "/trao_bang_gap.jpg", caption: "Tốt nghiệp cấp 3" },
   { src: "/display-image.svg", caption: "Ngày mưa đầu mùa" },
   { src: "/display-image.svg", caption: "Trung thu rước đèn" },
 ];
