@@ -61,12 +61,18 @@ export default function Gallery({ photos }: { photos: Photo[] }) {
           >
             ✕
           </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={photos[active].src}
-            alt={photos[active].caption ?? `Ảnh ${active + 1}`}
-            onClick={(e) => e.stopPropagation()}
-          />
+          <figure className="lightbox__figure" onClick={(e) => e.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={photos[active].src}
+              alt={photos[active].caption ?? `Ảnh ${active + 1}`}
+            />
+            {photos[active].caption && (
+              <figcaption className="lightbox__caption">
+                {photos[active].caption}
+              </figcaption>
+            )}
+          </figure>
         </div>
       )}
     </>
