@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Ký ức tuổi thơ",
-  description: "Bộ sưu tập những khoảnh khắc tuổi thơ và lời nhắn gửi",
+  title: "Ảnh vu vơ",
+  //description: "Ảnh vu vơ",
 };
 
 export default function RootLayout({
