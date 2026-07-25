@@ -145,7 +145,7 @@ export default function MessageBox() {
                 letterSpacing: 0.2,
               }}
             >
-              Gửi lời nhắn
+              Bình luận về tđbn
             </label>
             <button
               onClick={() => setOpen(false)}
@@ -173,7 +173,7 @@ export default function MessageBox() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Nhập lời nhắn của bạn..."
+              placeholder="Nhập bình luận của bạn..."
               rows={1}
               style={{
                 flex: 1,
