@@ -20,6 +20,7 @@ export default function PhotoGlobe({ photos }: { photos: Photo[] }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [active, setActive] = useState<number | null>(null); // ảnh đang phóng to (lightbox)
+  const swipeX = useRef<number | null>(null); // vị trí bắt đầu vuốt trong lightbox
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -155,14 +156,22 @@ export default function PhotoGlobe({ photos }: { photos: Photo[] }) {
     };
   }, [photos.length]);
 
-  // Phím Esc để đóng lightbox
+  // Chuyển sang ảnh trước / sau (quay vòng)
+  const total = photos.length;
+  const go = (dir: number) =>
+    setActive((a) => (a === null ? a : (a + dir + total) % total));
+
+  // Phím tắt trong lightbox: Esc đóng, ←/→ chuyển ảnh
   useEffect(() => {
     if (active === null) return;
     function onKey(e: KeyboardEvent) {
       if (e.key === "Escape") setActive(null);
+      else if (e.key === "ArrowRight") go(1);
+      else if (e.key === "ArrowLeft") go(-1);
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
   return (
@@ -187,7 +196,34 @@ export default function PhotoGlobe({ photos }: { photos: Photo[] }) {
           <button className="lightbox__close" aria-label="Đóng" onClick={() => setActive(null)}>
             ✕
           </button>
-          <figure className="lightbox__figure" onClick={(e) => e.stopPropagation()}>
+
+          {total > 1 && (
+            <button
+              className="lightbox__nav lightbox__nav--prev"
+              aria-label="Ảnh trước"
+              onClick={(e) => {
+                e.stopPropagation();
+                go(-1);
+              }}
+            >
+              ‹
+            </button>
+          )}
+
+          <figure
+            className="lightbox__figure"
+            onClick={(e) => e.stopPropagation()}
+            onPointerDown={(e) => {
+              swipeX.current = e.clientX;
+            }}
+            onPointerUp={(e) => {
+              if (swipeX.current === null) return;
+              const dx = e.clientX - swipeX.current;
+              swipeX.current = null;
+              if (dx > 45) go(-1);
+              else if (dx < -45) go(1);
+            }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={photos[active].src}
@@ -199,6 +235,19 @@ export default function PhotoGlobe({ photos }: { photos: Photo[] }) {
               </figcaption>
             )}
           </figure>
+
+          {total > 1 && (
+            <button
+              className="lightbox__nav lightbox__nav--next"
+              aria-label="Ảnh sau"
+              onClick={(e) => {
+                e.stopPropagation();
+                go(1);
+              }}
+            >
+              ›
+            </button>
+          )}
         </div>
       )}
     </>

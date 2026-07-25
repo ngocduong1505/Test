@@ -291,15 +291,66 @@ body {
   position: absolute;
   top: 18px;
   right: 18px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
+  padding: 0;
   border-radius: 12px;
   border: none;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  font-size: 22px;
+  font-size: 20px;
   line-height: 1;
+}
+
+/* Nút chuyển ảnh trước / sau */
+.lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.lightbox__nav:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.lightbox__nav--prev {
+  left: 16px;
+}
+
+.lightbox__nav--next {
+  right: 16px;
+}
+
+@media (max-width: 600px) {
+  .lightbox__nav {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+  .lightbox__nav--prev {
+    left: 8px;
+  }
+  .lightbox__nav--next {
+    right: 8px;
+  }
 }
 
 @keyframes fade {
